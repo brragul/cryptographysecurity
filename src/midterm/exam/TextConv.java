@@ -7,6 +7,7 @@ public class TextConv {
 	public static void main(String[] args) {
 		TextConv obj = new TextConv();
 		String[] num =obj.createNum("raviragul");
+		System.out.println(num[0]);
 		System.out.println(obj.createText(num));
 	}
 	
@@ -44,7 +45,7 @@ public class TextConv {
 		long a =i%26;
 		long n = (i-a)/26;
 		String s = ((a<10)?("0"+Long.toString(a)):Long.toString(a));
-		while(n>26){
+		while(n>=26){
 			a = n%26;
 			n = ((n-a)/26);
 			s = ((a<10)?("0"+Long.toString(a)):Long.toString(a))+s;
@@ -86,7 +87,7 @@ public class TextConv {
 	}
 	
 	
-	int blockLength=8;
+	int blockLength=3;
 	HashMap<String,String> lookup = new HashMap<String,String>(); 
 	HashMap<String,String> reverselookup = new HashMap<String,String>(); 
 

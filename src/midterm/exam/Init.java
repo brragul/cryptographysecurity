@@ -1,5 +1,6 @@
 package midterm.exam;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,53 +11,62 @@ public class Init {
 //		System.out.println(obj.findPrimeFactors(104970));
 //		System.out.println(obj.isPrime(105018));
 		//System.out.println(obj.findGCD(25678, 2004));
-		//System.out.println(obj.findModuloInverse(3,104891));
-		//System.out.println(obj.findSquareMultiply(649, 186910, 1993));
+		//System.out.println(obj.findModuloInverse(BigInteger.valueOf(442),BigInteger.valueOf(11001475644l)));
+		System.out.println(obj.findSquareMultiply(BigInteger.valueOf(442), BigInteger.valueOf(5), BigInteger.valueOf(11001685421l)));
 	}
 	
-	public long findSquareMultiply(int u,int m,int p){
+	public BigInteger findSquareMultiply(BigInteger u,BigInteger d,BigInteger p){
 		
-		long A = 1; 		
-		while(m>0){
-			int b = m%2;
-			if(b==1){
-				A = (A*u)%p;
+		BigInteger A = BigInteger.valueOf(1); 
+		while(d.compareTo(BigInteger.valueOf(0))==1){
+			BigInteger b = d.mod(BigInteger.valueOf(2));
+			if(b.equals(BigInteger.valueOf(1))){
+				A = A.multiply(u);
+				A = A.mod(p);
 			}
-			m = (m-b)/2;
-			u = (int) (Math.pow(u,2)%p);
+			if(d.compareTo(BigInteger.valueOf(0))==1)
+			{
+			d = d.subtract(b);//(d-b)/2;
+			d= d.divide(BigInteger.valueOf(2));
+			u = u.pow(2);
+			u = u.mod(p);
+			}else{
+				return A;
+			}
 		}
 		
 		return A;
 	}
 	
-	public int findModuloInverse(int a,int p){
+	public BigInteger findModuloInverse(BigInteger a,BigInteger p){
 		findGCD(a,p);
-		Long[] qq = new Long[quo.size()];
+		BigInteger[] qq = new BigInteger[quo.size()];
 		qq = quo.toArray(qq);
-		long s0=0,s1=1,s2=0;
+		BigInteger s0=BigInteger.ZERO,s1=BigInteger.ONE,s2=BigInteger.ZERO;
 		for(int j=qq.length-1;j>=0;j--){
-			s2 = s0+(s1*qq[j]);
+			s2 = s1.multiply(qq[j]);
+			s2 = s2.add(s0);//s0+(s1*qq[j]);
 			s0=s1;
 			s1=s2;
 		}
 		if((quo.size()-1)%2==0){
-			return (int) (p-s2);
+			return p.subtract(s2);
 		}
-		return (int) s2;
+		return s2;
 	}
 	
-	List<Long> quo = new ArrayList<Long>();
+	List<BigInteger> quo = new ArrayList<BigInteger>();
 	
-	public int findGCD(long t,long b){
-		if(t<b){
-			long temp =t;
+	public BigInteger findGCD(BigInteger t,BigInteger b){
+		if(t.compareTo(b)==-1){
+			BigInteger temp =t;
 			t=b;
 			b=temp;
 		}
-		long r =  (t%b);
-		long q =  (t/b);
-		if(r==0){
-			return (int) b;
+		BigInteger r = t.mod(b);// (t%b);
+		BigInteger q =  t.divide(b);//(t/b);
+		if(r.equals(BigInteger.valueOf(0))){
+			return  b;
 		}
 		quo.add(q);
 		return findGCD(b,r);
