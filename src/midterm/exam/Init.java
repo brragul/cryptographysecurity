@@ -9,20 +9,43 @@ public class Init {
 		Init obj = new Init();
 //		System.out.println(obj.findPrimeFactors(104970));
 //		System.out.println(obj.isPrime(105018));
-		System.out.println(obj.findGCD(1160718174, 316258250));
+		//System.out.println(obj.findGCD(25678, 2004));
+		//System.out.println(obj.findModuloInverse(3,104891));
+		System.out.println(obj.findSquareMultiply(1789, 45673, 104917));
 	}
-	public  int modulo(int p,int q){
-		return p%q;
+	
+	public long findSquareMultiply(int u,int m,int p){
+		
+		long A = 1; 		
+		while(m>0){
+			int b = m%2;
+			if(b==1){
+				A = (A*u)%p;
+			}
+			m = (m-b)/2;
+			u = (int) (Math.pow(u,2)%p);
+		}
+		
+		return A;
 	}
 	
 	public int findModuloInverse(int a,int p){
-		if(findGCD(a, p)!=1){
-			System.out.println("GCD of both numbers is not 1");
-			return 0;
+		findGCD(a,p);
+		Integer[] qq = new Integer[quo.size()];
+		qq = quo.toArray(qq);
+		int s0=0,s1=1,s2=0;
+		for(int j=qq.length-1;j>=0;j--){
+			s2 = s0+(s1*qq[j]);
+			s0=s1;
+			s1=s2;
 		}
-		
-		return 0;
+		if((quo.size()-1)%2==0){
+			return p-s2;
+		}
+		return s2;
 	}
+	
+	List<Integer> quo = new ArrayList<Integer>();
 	
 	public int findGCD(int a,int b){
 		if(a<b){
@@ -35,6 +58,7 @@ public class Init {
 		if(r==0){
 			return b;
 		}
+		quo.add(q);
 		return findGCD(b,r);
 		
 	}
