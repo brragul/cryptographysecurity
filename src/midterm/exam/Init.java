@@ -11,7 +11,7 @@ public class Init {
 //		System.out.println(obj.isPrime(105018));
 		//System.out.println(obj.findGCD(25678, 2004));
 		//System.out.println(obj.findModuloInverse(3,104891));
-		System.out.println(obj.findSquareMultiply(1789, 45673, 104917));
+		//System.out.println(obj.findSquareMultiply(649, 186910, 1993));
 	}
 	
 	public long findSquareMultiply(int u,int m,int p){
@@ -31,32 +31,32 @@ public class Init {
 	
 	public int findModuloInverse(int a,int p){
 		findGCD(a,p);
-		Integer[] qq = new Integer[quo.size()];
+		Long[] qq = new Long[quo.size()];
 		qq = quo.toArray(qq);
-		int s0=0,s1=1,s2=0;
+		long s0=0,s1=1,s2=0;
 		for(int j=qq.length-1;j>=0;j--){
 			s2 = s0+(s1*qq[j]);
 			s0=s1;
 			s1=s2;
 		}
 		if((quo.size()-1)%2==0){
-			return p-s2;
+			return (int) (p-s2);
 		}
-		return s2;
+		return (int) s2;
 	}
 	
-	List<Integer> quo = new ArrayList<Integer>();
+	List<Long> quo = new ArrayList<Long>();
 	
-	public int findGCD(int a,int b){
-		if(a<b){
-			int temp =a;
-			a=b;
+	public int findGCD(long t,long b){
+		if(t<b){
+			long temp =t;
+			t=b;
 			b=temp;
 		}
-		int r = a%b;
-		int q = a/b;
+		long r =  (t%b);
+		long q =  (t/b);
 		if(r==0){
-			return b;
+			return (int) b;
 		}
 		quo.add(q);
 		return findGCD(b,r);
