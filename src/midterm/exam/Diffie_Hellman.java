@@ -22,28 +22,29 @@ public class Diffie_Hellman {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Prime p : ");
 		long p = sc.nextLong();
-		new Diffie_Hellman(p);
+		Diffie_Hellman df = new Diffie_Hellman(p);
+		df.display();
 	}
 	
 	public Diffie_Hellman(long p) {
 		g = init.findGenerator(p);
-		System.out.println("The Generator is : "+g+"\n Make generator and prime public");
 		aR = randomNumberGenerator((int)p);
-		 A = init.findSquareMultiply(BigInteger.valueOf(g), BigInteger.valueOf(aR), BigInteger.valueOf(p));
+		A = init.findSquareMultiply(BigInteger.valueOf(g), BigInteger.valueOf(aR), BigInteger.valueOf(p));
+		bR = randomNumberGenerator((int)p);
+		B = init.findSquareMultiply(BigInteger.valueOf(g), BigInteger.valueOf(bR), BigInteger.valueOf(p));
+		Ak = init.findSquareMultiply(B, BigInteger.valueOf(aR), BigInteger.valueOf(p));
+		Bk = init.findSquareMultiply(A, BigInteger.valueOf(bR), BigInteger.valueOf(p));
+	}
+	public void display(){
+		System.out.println("The Generator is : "+g+"\n Make generator and prime public");
 		System.out.println("Alice's Random number : "+aR);
 		System.out.println("Alice sends A to Bob : "+A);
-		bR = randomNumberGenerator((int)p);
-		 B = init.findSquareMultiply(BigInteger.valueOf(g), BigInteger.valueOf(bR), BigInteger.valueOf(p));
 		System.out.println("Bob's Random number : "+bR);
 		System.out.println("Bob sends B to Alice : "+B);
 		System.out.println("Alice Finds the K(a,b) ");
-		 Ak = init.findSquareMultiply(B, BigInteger.valueOf(aR), BigInteger.valueOf(p));
 		System.out.println(Ak);
 		System.out.println("Bob Finds the K(a,b) ");
-		 Bk = init.findSquareMultiply(A, BigInteger.valueOf(bR), BigInteger.valueOf(p));
 		System.out.println(Bk);
-		
-		
 	}
 	
 	public static long randomNumberGenerator(int p2){

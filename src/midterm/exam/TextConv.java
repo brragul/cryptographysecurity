@@ -1,14 +1,17 @@
 package midterm.exam;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 
 public class TextConv {
 
 	public static void main(String[] args) {
 		TextConv obj = new TextConv();
-		String[] num =obj.createNum("raviragul");
-		System.out.println(num[0]);
-		System.out.println(obj.createText(num));
+//		String[] num =obj.createNum("raviragul");
+//		System.out.println(num[0]);
+//		System.out.println(obj.createText(num));
+		obj.generateBlockSize(BigInteger.valueOf(104959));
+		System.out.println(obj.blockLength);
 	}
 	
 	public String[] createNum(String s){
@@ -17,7 +20,7 @@ public class TextConv {
 		if(s.length()%blockLength!=0){
 			int t = blockLength-(s.length()%blockLength);
 			for(int i=0;i<t;i++){
-				s = s+"E";
+				s = s+"Z";
 			}
 		}
 		String[] out = new String[totalBlocks];
@@ -86,8 +89,21 @@ public class TextConv {
 		initLookUp();
 	}
 	
+	//Find a block size with compressed value less than prime p
+	public void generateBlockSize(BigInteger p){
+		String s = "Z";
+		blockLength++;
+		String[] ss = createNum(s);
+		while(BigInteger.valueOf(Long.parseLong(ss[0])).compareTo(p)==-1){
+			blockLength++;
+			s += "Z";
+			ss=createNum(s);
+		}
+		blockLength--;
+	}
 	
-	int blockLength=2;
+	
+	int blockLength=3;
 	HashMap<String,String> lookup = new HashMap<String,String>(); 
 	HashMap<String,String> reverselookup = new HashMap<String,String>(); 
 

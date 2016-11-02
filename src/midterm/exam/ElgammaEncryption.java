@@ -9,6 +9,8 @@ public class ElgammaEncryption {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		long p  = 104917;//sc.nextLong();
+		txt.generateBlockSize(BigInteger.valueOf(p));
+		System.out.println("Block size : "+txt.blockLength);
 		Diffie_Hellman DH = new Diffie_Hellman(p);
 		long k = 17;//DH.randomNumberGenerator((int)p);
 		System.out.println("Random Key : "+k);
@@ -18,7 +20,7 @@ public class ElgammaEncryption {
 		long g = obj.findGenerator(p);
 		System.out.println("Generator : "+g);
 		/******Encryption*******/
-		BigInteger pB = obj.findSquareMultiply(BigInteger.valueOf(g), BigInteger.valueOf(DH.bR), BigInteger.valueOf(p));
+		BigInteger pB = obj.findSquareMultiply(BigInteger.valueOf(g), BigInteger.valueOf(DH.bR), BigInteger.valueOf(p));//Used b from diffe-hellman
 		
 		BigInteger M = obj.findSquareMultiply(pB, BigInteger.valueOf(k), BigInteger.valueOf(p));
 		BigInteger[] C = new BigInteger[num.length];
@@ -48,7 +50,7 @@ public class ElgammaEncryption {
 			System.out.print(D[j]+" ");
 			fin[j]= D[j].toString();
 		}
-		System.out.println(txt.createText(fin));
+		System.out.println("\n"+txt.createText(fin));
 
 	}
 

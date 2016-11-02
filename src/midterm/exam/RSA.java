@@ -15,6 +15,11 @@ public class RSA {
 		BigInteger p = BigInteger.valueOf(104789);//sc.nextBigInteger();
 		System.out.println("Enter prime q : ");
 		BigInteger q = BigInteger.valueOf(104959);//sc.nextBigInteger();
+		if(p.compareTo(q)==1){
+			txt.generateBlockSize(q);
+		}else{
+			txt.generateBlockSize(p);
+		}
 		BigInteger n = p.multiply(q);
 		System.out.println("N : "+n);
 		BigInteger totien = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE));
