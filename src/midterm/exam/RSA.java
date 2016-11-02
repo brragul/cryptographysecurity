@@ -28,6 +28,7 @@ public class RSA {
 		System.out.println("Please enter text to be encrypted");
 		String s = "Do not send mails like plain text in email or you are gone";//sc1.nextLine();
 		String[] num = txt.createNum(s);
+		/******Encryption*******/
 		BigInteger[] dataToSend = new BigInteger[num.length];
 		int i = 0;
 		System.out.print("Compressed Data : ");
@@ -44,6 +45,7 @@ public class RSA {
 		for(BigInteger l: dataToSend){
 			System.out.print(l+" ");
 		}
+		/******Decryption*******/
 		System.out.println("\nBob's decrypting received data using d");
 		BigInteger[] decryptedData = new BigInteger[num.length];i=0;
 		String[] fin = new String[num.length];
@@ -51,11 +53,10 @@ public class RSA {
 			decryptedData[i] = obj.findSquareMultiply(l, d, n);
 			System.out.print(decryptedData[i]+" ");
 			fin[i]= decryptedData[i].toString();
-			fin[i] = fin[i].length()%2!=0?"0"+fin[i]:fin[i];
 			i++;
 		}
 		String data = txt.createText(fin);
-		System.out.println(data);
+		System.out.println("\n"+data);
 		
 	}
 	

@@ -32,7 +32,7 @@ public class TextConv {
 	public String createText(String[] s_arr){
 		String out ="";
 		for(String s : s_arr){
-			String d = decompress(Long.parseLong(s));
+			String d = decompress(Long.parseLong(s.length()%2!=0?"0"+s:s));
 			for(int j=0;j<d.length();j+=2){
 				out += reverselookup.get(d.substring(j,j+2));
 			}
@@ -87,7 +87,7 @@ public class TextConv {
 	}
 	
 	
-	int blockLength=3;
+	int blockLength=2;
 	HashMap<String,String> lookup = new HashMap<String,String>(); 
 	HashMap<String,String> reverselookup = new HashMap<String,String>(); 
 
