@@ -12,9 +12,9 @@ public class RSA {
 		Scanner sc1 = new Scanner(System.in);
 		
 		System.out.println("Enter prime p : ");
-		BigInteger p = BigInteger.valueOf(104789);//sc.nextBigInteger();
+		BigInteger p = sc.nextBigInteger();
 		System.out.println("Enter prime q : ");
-		BigInteger q = BigInteger.valueOf(104959);//sc.nextBigInteger();
+		BigInteger q =sc.nextBigInteger();
 		if(p.compareTo(q)==1){
 			txt.generateBlockSize(q);
 		}else{
@@ -31,7 +31,7 @@ public class RSA {
 		BigInteger d = obj.findModuloInverse(e,totien);
 		System.out.println("D : "+d);
 		System.out.println("Please enter text to be encrypted");
-		String s = "Do not send mails like plain text in email or you are gone";//sc1.nextLine();
+		String s = sc1.nextLine();
 		String[] num = txt.createNum(s);
 		/******Encryption*******/
 		BigInteger[] dataToSend = new BigInteger[num.length];

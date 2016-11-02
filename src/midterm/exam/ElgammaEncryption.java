@@ -8,15 +8,17 @@ public class ElgammaEncryption {
 	public static Init obj = new Init();
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		long p  = 104917;//sc.nextLong();
+		Scanner sc1 = new Scanner(System.in);
+		System.out.println("Enter Prime p : ");
+		long p  = sc.nextLong();
 		txt.generateBlockSize(BigInteger.valueOf(p));
 		System.out.println("Block size : "+txt.blockLength);
 		Diffie_Hellman DH = new Diffie_Hellman(p);
-		long k = 17;//DH.randomNumberGenerator((int)p);
+		long k = DH.randomNumberGenerator((int)p);
 		System.out.println("Random Key : "+k);
-		
-		String s = "some random things should go down here but i am typing some random things";//sc1.nextLine();
-		String[] num = txt.createNum(s);//new String[]{"21"};//
+		System.out.println("Enter text to be encrypted");
+		String s = sc1.nextLine();
+		String[] num = txt.createNum(s);
 		long g = obj.findGenerator(p);
 		System.out.println("Generator : "+g);
 		/******Encryption*******/

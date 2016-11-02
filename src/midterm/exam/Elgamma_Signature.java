@@ -9,10 +9,10 @@ public class Elgamma_Signature {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		
+		Scanner sc1 = new Scanner(System.in);
 		System.out.println("Prime P : ");
 		/******Key Generation*******/
-		long p = 105019;//sc.nextLong();
+		long p = sc.nextLong();
 		txt.generateBlockSize(BigInteger.valueOf(p));
 		Diffie_Hellman DF = new Diffie_Hellman(p);
 		long g = obj.findGenerator(p);
@@ -30,7 +30,7 @@ public class Elgamma_Signature {
 		BigInteger X = obj.findSquareMultiply(BigInteger.valueOf(g), BigInteger.valueOf(R), pBig);
 		System.out.println("X : "+X);
 		System.out.println("Please enter text to be Signed");
-		String s = "Do not send mails like plain text in email or you are gone";//sc1.nextLine();
+		String s = sc1.nextLine();
 		String[] M = txt.createNum(s);
 		BigInteger[] Y = new BigInteger[M.length];
 		System.out.print("Value of Y are : ");

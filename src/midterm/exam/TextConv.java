@@ -4,16 +4,8 @@ import java.math.BigInteger;
 import java.util.HashMap;
 
 public class TextConv {
-
-	public static void main(String[] args) {
-		TextConv obj = new TextConv();
-//		String[] num =obj.createNum("raviragul");
-//		System.out.println(num[0]);
-//		System.out.println(obj.createText(num));
-		obj.generateBlockSize(BigInteger.valueOf(104959));
-		System.out.println(obj.blockLength);
-	}
 	
+	//Convert String to Number
 	public String[] createNum(String s){
 		s =s.toUpperCase().replace(" " ,"");
 		int totalBlocks = (int) Math.ceil(((float)s.length()/(float)blockLength));
@@ -32,6 +24,7 @@ public class TextConv {
 		
 	}
 	
+	//convert Number to String
 	public String createText(String[] s_arr){
 		String out ="";
 		for(String s : s_arr){
@@ -87,7 +80,7 @@ public class TextConv {
 		initLookUp();
 	}
 	
-	//Find a block size with compressed value less than prime p
+	//Find a block size with value of compressed  less than prime p
 	public void generateBlockSize(BigInteger p){
 		String s = "Z";
 		blockLength++;
@@ -101,7 +94,7 @@ public class TextConv {
 	}
 	
 	
-	int blockLength=3;
+	int blockLength=0;
 	HashMap<String,String> lookup = new HashMap<String,String>(); 
 	HashMap<String,String> reverselookup = new HashMap<String,String>(); 
 
