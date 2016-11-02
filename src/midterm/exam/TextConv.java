@@ -81,8 +81,6 @@ public class TextConv {
 			lookup.put(Character.toString(((char)i)), (i-65)<10?("0"+(i-65)):Integer.toString((i-65)));
 			reverselookup.put((i-65)<10?("0"+(i-65)):Integer.toString((i-65)),Character.toString(((char)i)));
 		}
-//		lookup.put(" ", "26");
-//		reverselookup.put("26", " ");
 	}
 	
 	public TextConv(){

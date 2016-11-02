@@ -8,10 +8,10 @@ public class Init {
 	
 	public static void main(String[] args){
 		Init obj = new Init();
-		System.out.println(obj.findPrimeFactors(306));
+		//System.out.println(obj.findPrimeFactors(306));
 //		System.out.println(obj.isPrime(105018));
 		//System.out.println(obj.findGCD(25678, 2004));
-		//System.out.println(obj.findModuloInverse(BigInteger.valueOf(442),BigInteger.valueOf(11001475644l)));
+		System.out.println(obj.findModuloInverse(BigInteger.valueOf(9),BigInteger.valueOf(10)));
 		//System.out.println(obj.findSquareMultiply(BigInteger.valueOf(442), BigInteger.valueOf(5), BigInteger.valueOf(11001685421l)));
 	}
 	
