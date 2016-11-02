@@ -22,6 +22,7 @@ public class RSA {
 		BigInteger e = rsa.find_coprime(totien);
 		System.out.println("E : "+e);
 		obj.quo.clear();
+		System.out.println("Share e and n with Alice");
 		BigInteger d = obj.findModuloInverse(e,totien);
 		System.out.println("D : "+d);
 		System.out.println("Please enter text to be encrypted");
@@ -39,7 +40,7 @@ public class RSA {
 			System.out.print(ss+" ");
 			i++;
 		}
-		System.out.println("\nData to be sent after encryption : ");
+		System.out.println("\nData to be sent by Alice after encryption : ");
 		for(BigInteger l: dataToSend){
 			System.out.print(l+" ");
 		}
