@@ -28,22 +28,22 @@ public class Diffie_Hellman {
 	
 	public Diffie_Hellman(long p) {
 		g = init.findGenerator(p);
-		aR = randomNumberGenerator((int)p);
+		aR = (long) Math.pow(16, 2);//randomNumberGenerator((int)p);
 		A = init.findSquareMultiply(BigInteger.valueOf(g), BigInteger.valueOf(aR), BigInteger.valueOf(p));
-		bR = randomNumberGenerator((int)p);
+		bR = (long) Math.pow(16, 3);//randomNumberGenerator((int)p);
 		B = init.findSquareMultiply(BigInteger.valueOf(g), BigInteger.valueOf(bR), BigInteger.valueOf(p));
 		Ak = init.findSquareMultiply(B, BigInteger.valueOf(aR), BigInteger.valueOf(p));
 		Bk = init.findSquareMultiply(A, BigInteger.valueOf(bR), BigInteger.valueOf(p));
 	}
 	public void display(){
 		System.out.println("The Generator is : "+g+"\n Make generator and prime public");
-		System.out.println("Alice's Random number : "+aR);
-		System.out.println("Alice sends A to Bob : "+A);
-		System.out.println("Bob's Random number : "+bR);
-		System.out.println("Bob sends B to Alice : "+B);
-		System.out.println("Alice Finds the K(a,b) ");
+		System.out.println("Alice's Random number : aR "+aR);
+		System.out.println("Alice sends A to Bob : g^aR log p "+A);
+		System.out.println("Bob's Random number : bR "+bR);
+		System.out.println("Bob sends B to Alice : g^bR log p"+B);
+		System.out.println("Alice Finds the K(a,b) B^aR log p");
 		System.out.println(Ak);
-		System.out.println("Bob Finds the K(a,b) ");
+		System.out.println("Bob Finds the K(a,b) A^bR log p");
 		System.out.println(Bk);
 	}
 	

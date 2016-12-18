@@ -11,8 +11,8 @@ public class Init {
 		//System.out.println(obj.findPrimeFactors(306));
 //		System.out.println(obj.isPrime(105018));
 		//System.out.println(obj.findGCD(25678, 2004));
-		System.out.println(obj.findModuloInverse(BigInteger.valueOf(9),BigInteger.valueOf(10)));
-		//System.out.println(obj.findSquareMultiply(BigInteger.valueOf(442), BigInteger.valueOf(5), BigInteger.valueOf(11001685421l)));
+		//System.out.println(obj.findModuloInverse(BigInteger.valueOf(9),BigInteger.valueOf(10)));
+		System.out.println(obj.findSquareMultiply(BigInteger.valueOf(145841453262l), BigInteger.valueOf(5), new BigInteger("311389048999897042055857")));
 	}
 	
 	public BigInteger findSquareMultiply(BigInteger u,BigInteger d,BigInteger p){
@@ -98,6 +98,9 @@ public class Init {
 	public long findGenerator(long p){
 		boolean tmp = false;
 		List<Integer> pF= findPrimeFactors(p-1);
+		for(Integer i : pF){
+			System.out.print(pF+" ");
+		}
 		Integer[] iPF = pF.toArray(new Integer[pF.size()]);
 		
 		for(int j=2;j<100;j++){
@@ -106,6 +109,7 @@ public class Init {
 				long pw = (p-1)/iPF[i];
 				BigInteger g = findSquareMultiply(BigInteger.valueOf(j),BigInteger.valueOf(pw), BigInteger.valueOf(p));
 				if(g.compareTo(BigInteger.valueOf(1))==0){
+					System.out.println("Failed Generator + "+j+"at "+g);
 					tmp = true;
 					break;
 				}

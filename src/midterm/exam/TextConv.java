@@ -5,6 +5,18 @@ import java.util.HashMap;
 
 public class TextConv {
 	
+	public static void main(String[] args){
+		TextConv t = new TextConv();
+		//t.generateBlockSize(BigInteger.valueOf(746959l));
+		//System.out.println(t.blockLength);
+		String[] arr = t.createNum("security");//new String[]{"319144","304718"};
+		System.out.println();
+		for(String s: arr){
+			System.out.print(s+" ");
+		}
+		System.out.println(t.createText(arr));
+	}
+	
 	//Convert String to Number
 	public String[] createNum(String s){
 		s =s.toUpperCase().replace(" " ,"");
@@ -24,11 +36,12 @@ public class TextConv {
 		
 	}
 	
-	//convert Number to String
-	public String createText(String[] s_arr){
+	/*public String createText(String[] s_arr){
 		String out ="";
+		System.out.println("\n");
 		for(String s : s_arr){
 			String d = decompress(Long.parseLong(s.length()%2!=0?"0"+s:s));
+			System.out.print(d+" ");
 			for(int j=0;j<d.length();j+=2){
 				out += reverselookup.get(d.substring(j,j+2));
 			}
@@ -48,6 +61,35 @@ public class TextConv {
 		}
 		s = ((n<10)?("0"+Long.toString(n)):Long.toString(n))+s;
 		return s;
+	}*/
+	
+	//convert Number to String
+	public String createText(String[] s_arr){
+		String out ="";
+		System.out.println("\n");
+		for(String s : s_arr){
+			String d = decompress(new BigInteger(s));//Long.parseLong(s.length()%2!=0)?"0"+s:s));
+			d =d.length()%2!=0?"0"+d:d;
+			System.out.print(d+" ");
+			for(int j=0;j<d.length();j+=2){
+				out += reverselookup.get(d.substring(j,j+2));
+			}
+		}
+		
+		return out;
+	}
+	
+	public String decompress(BigInteger i){
+		BigInteger a =i.mod(BigInteger.valueOf(26));
+		BigInteger n = (i.subtract(a)).divide(BigInteger.valueOf(26));
+		String s = ((a.compareTo(BigInteger.valueOf(10))==-1)?("0"+a.toString()):a.toString());
+		while(n.compareTo(BigInteger.valueOf(26))==1||n.compareTo(BigInteger.valueOf(26))==0){
+			a = n.mod(BigInteger.valueOf(26));
+			n = ((n.subtract(a)).divide(BigInteger.valueOf(26)));
+			s = ((a.compareTo(BigInteger.valueOf(10))==-1)?("0"+a.toString()):a.toString())+s;
+		}
+		s = ((n.compareTo(BigInteger.valueOf(10))==-1)?("0"+n.toString()):n.toString())+s;
+		return s;
 	}
 	
 	public String textToNum(String s){
@@ -61,12 +103,15 @@ public class TextConv {
 	}
 	
 	public String compressData(String s){
-		long out = 0;int j=0;
+		BigInteger out = BigInteger.ZERO;int j=0;
 		for(int i=s.length()/2;i>0;i--){
-			out += (Math.pow(26, i-1)*Long.parseLong(s.substring(j, j+2)));
+			//out = out.add(BigInteger.valueOf((long) ((Math.pow(26, i-1)).*Long.parseLong(s.substring(j, j+2)))));
+			BigInteger tmp = new BigInteger(s.substring(j, j+2));
+			BigInteger tmp1 = BigInteger.valueOf((long)Math.pow(26, i-1));
+			out = out.add(tmp.multiply(tmp1));
 			j +=2;
 		}
-		return Long.toString(out);
+		return out.toString();
 	}
 	
 	public void initLookUp(){
@@ -85,7 +130,7 @@ public class TextConv {
 		String s = "Z";
 		blockLength++;
 		String[] ss = createNum(s);
-		while(BigInteger.valueOf(Long.parseLong(ss[0])).compareTo(p)==-1){
+		while(new BigInteger(ss[0]).compareTo(p)==-1){
 			blockLength++;
 			s += "Z";
 			ss=createNum(s);
@@ -94,7 +139,7 @@ public class TextConv {
 	}
 	
 	
-	int blockLength=0;
+	int blockLength=4;
 	HashMap<String,String> lookup = new HashMap<String,String>(); 
 	HashMap<String,String> reverselookup = new HashMap<String,String>(); 
 

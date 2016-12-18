@@ -12,14 +12,17 @@ public class RSA {
 		Scanner sc1 = new Scanner(System.in);
 		
 		System.out.println("Enter prime p : ");
-		BigInteger p = sc.nextBigInteger();
+		BigInteger p = BigInteger.valueOf(746969l*746981l);//sc.nextBigInteger();BigInteger.valueOf(746969l);//
+		System.out.println("p : "+p);
 		System.out.println("Enter prime q : ");
-		BigInteger q =sc.nextBigInteger();
+		BigInteger q = BigInteger.valueOf(747037l*747049l);//BigInteger.valueOf(747037l);//
+		System.out.println("q : "+q);
 		if(p.compareTo(q)==1){
 			txt.generateBlockSize(q);
 		}else{
 			txt.generateBlockSize(p);
 		}
+		System.out.println("Block Size"+txt.blockLength);
 		BigInteger n = p.multiply(q);
 		System.out.println("N : "+n);
 		BigInteger totien = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE));
@@ -29,6 +32,9 @@ public class RSA {
 		obj.quo.clear();
 		System.out.println("Share e and n with Alice");
 		BigInteger d = obj.findModuloInverse(e,totien);
+		if(obj.findSquareMultiply(d.multiply(e), BigInteger.ONE, totien).compareTo(BigInteger.ONE)!=0){
+			System.out.println("d*e mod totient not 1");
+		}
 		System.out.println("D : "+d);
 		System.out.println("Please enter text to be encrypted");
 		String s = sc1.nextLine();
@@ -42,7 +48,7 @@ public class RSA {
 				System.out.println("Message is larger than p and q");
 				return;
 			}
-			dataToSend[i] = obj.findSquareMultiply(BigInteger.valueOf(Long.parseLong(ss)),e,n);
+			dataToSend[i] = obj.findSquareMultiply(new BigInteger(ss),e,n);
 			System.out.print(ss+" ");
 			i++;
 		}
