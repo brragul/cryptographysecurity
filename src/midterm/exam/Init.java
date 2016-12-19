@@ -8,12 +8,14 @@ public class Init {
 	
 	public static void main(String[] args){
 		Init obj = new Init();
+		BigInteger k = BigInteger.valueOf(6);
 		//System.out.println(obj.findPrimeFactors(306));
 //		System.out.println(obj.isPrime(105018));
 		//System.out.println(obj.findGCD(25678, 2004));
-		System.out.println(obj.findModuloInverse(BigInteger.valueOf(24),BigInteger.valueOf(23)));
-		System.out.println(obj.findSquareMultiply(BigInteger.valueOf(4*2), BigInteger.valueOf(1), new BigInteger("23")));
-		System.out.println(Integer.valueOf(-147)%Integer.valueOf(23));
+		//System.out.println(obj.findModuloInverse(BigInteger.valueOf(24),BigInteger.valueOf(23)));
+		System.out.println(obj.findSquareMultiply(k, BigInteger.valueOf(3), BigInteger.valueOf(23)));
+		//System.out.println(Integer.valueOf(-147)%Integer.valueOf(23));
+		//System.out.println(5%25);
 	}
 	
 	public BigInteger findSquareMultiply(BigInteger u,BigInteger d,BigInteger p){
