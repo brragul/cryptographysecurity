@@ -12,12 +12,14 @@ public class ECC {
 		ECC ecc = new ECC();
 		//ecc.twoP(new Point(BigInteger.valueOf(22),BigInteger.valueOf(12)), BigInteger.valueOf(23), BigInteger.valueOf(2));
 		//ecc.addPoints(new Point(BigInteger.valueOf(0),BigInteger.valueOf(3)),new Point(BigInteger.valueOf(13),BigInteger.valueOf(1)), BigInteger.valueOf(23), BigInteger.valueOf(2));
-		//ecc.findOrder(new Point(BigInteger.valueOf(2288),BigInteger.valueOf(1585)), BigInteger.valueOf(3571), BigInteger.valueOf(7));
+		//ecc.findOrder(new Point(BigInteger.valueOf(9),BigInteger.valueOf(2377)), BigInteger.valueOf(3571), BigInteger.valueOf(7));
 		//ecc.findXP(150, new Point(BigInteger.valueOf(16),BigInteger.valueOf(3096)), BigInteger.valueOf(3571), BigInteger.valueOf(7));
-		//ecc.generatePoint(new Point(BigInteger.valueOf(12),BigInteger.valueOf(6)), BigInteger.valueOf(23), BigInteger.valueOf(2));
+		ecc.generatePoint(new Point(BigInteger.valueOf(12),BigInteger.valueOf(6)), BigInteger.valueOf(23), BigInteger.valueOf(2));
 		//System.out.println(ecc.powBigInteger(BigInteger.valueOf(6), BigInteger.valueOf(2)));
-		ecc.findRoot(BigInteger.valueOf(13), BigInteger.valueOf(7), BigInteger.valueOf(15), BigInteger.valueOf(3571));
+		//ecc.findRoot(BigInteger.valueOf(13), BigInteger.valueOf(7), BigInteger.valueOf(15), BigInteger.valueOf(3571));
 	}
+	
+	//public 
 	
 	public ArrayList<Point> generatePoint(Point P,BigInteger p,BigInteger a){
 		ArrayList<Point> arrP = new ArrayList<Point>();
@@ -35,24 +37,7 @@ public class ECC {
 		System.out.println("Total Points/order:"+(arrP.size()+1));
 		return arrP;
 	}
-	public BigInteger powBigInteger(BigInteger x, BigInteger y) {
-		  if (y.compareTo(BigInteger.ZERO) < 0)
-		    throw new IllegalArgumentException();
-		  BigInteger z = x; 
-		  BigInteger result = BigInteger.ONE;
-		  byte[] bytes = y.toByteArray();
-		  for (int i = bytes.length - 1; i >= 0; i--) {
-		    byte bits = bytes[i];
-		    for (int j = 0; j < 8; j++) {
-		      if ((bits & 1) != 0)
-		        result = result.multiply(z);
-		      if ((bits >>= 1) == 0 && i == 0)
-		        return result;
-		      z = z.multiply(z);
-		    }
-		  }
-		  return result;
-		}
+	
 	public Point findRoot(BigInteger x,BigInteger a,BigInteger b,BigInteger p){
 		BigInteger u = (x.pow(3).add(a.multiply(x))).add(b);
 		BigInteger y =init.findSquareMultiply(u, BigInteger.valueOf(1), p);
@@ -61,6 +46,7 @@ public class ECC {
 		P.y = p.subtract(P.x);
 		if(init.findSquareMultiply(P.x.pow(2), BigInteger.ONE, p).compareTo(y)==0&&init.findSquareMultiply(P.y.pow(2), BigInteger.ONE, p).compareTo(y)==0){
 			//P.x and P.y are root1 and root2 respectively
+			P.printPoint();
 			return P;
 		}
 		return null;
@@ -129,6 +115,26 @@ public class ECC {
 //		p2.printPoint();
 		return p2;
 	}
+	
+	//To find BigInteger power BigInteger
+		public BigInteger powBigInteger(BigInteger x, BigInteger y) {
+			  if (y.compareTo(BigInteger.ZERO) < 0)
+			    throw new IllegalArgumentException();
+			  BigInteger z = x; 
+			  BigInteger result = BigInteger.ONE;
+			  byte[] bytes = y.toByteArray();
+			  for (int i = bytes.length - 1; i >= 0; i--) {
+			    byte bits = bytes[i];
+			    for (int j = 0; j < 8; j++) {
+			      if ((bits & 1) != 0)
+			        result = result.multiply(z);
+			      if ((bits >>= 1) == 0 && i == 0)
+			        return result;
+			      z = z.multiply(z);
+			    }
+			  }
+			  return result;
+			}
 }
 
 
