@@ -11,7 +11,7 @@ public class Init {
 		//System.out.println(obj.findPrimeFactors(306));
 //		System.out.println(obj.isPrime(105018));
 		//System.out.println(obj.findGCD(25678, 2004));
-		System.out.println(obj.findModuloInverse(BigInteger.valueOf(6),BigInteger.valueOf(23)));
+		System.out.println(obj.findModuloInverse(BigInteger.valueOf(24),BigInteger.valueOf(23)));
 		System.out.println(obj.findSquareMultiply(BigInteger.valueOf(4*2), BigInteger.valueOf(1), new BigInteger("23")));
 		System.out.println(Integer.valueOf(-147)%Integer.valueOf(23));
 	}
@@ -40,20 +40,24 @@ public class Init {
 	}
 	
 	public BigInteger findModuloInverse(BigInteger a,BigInteger p){
-		findGCD(a,p);
-		BigInteger[] qq = new BigInteger[quo.size()];
-		qq = quo.toArray(qq);
-		BigInteger s0=BigInteger.ZERO,s1=BigInteger.ONE,s2=BigInteger.ZERO;
-		for(int j=qq.length-1;j>=0;j--){
-			s2 = s1.multiply(qq[j]);
-			s2 = s2.add(s0);//s0+(s1*qq[j]);
-			s0=s1;
-			s1=s2;
-		}
-		if((quo.size()-1)%2==0){
-			return p.subtract(s2);
-		}
-		return s2;
+		return a.modInverse(p);
+//		if(a.compareTo(BigInteger.valueOf(1))==0){
+//			return a;
+//		}
+//		findGCD(a,p);
+//		BigInteger[] qq = new BigInteger[quo.size()];
+//		qq = quo.toArray(qq);
+//		BigInteger s0=BigInteger.ZERO,s1=BigInteger.ONE,s2=BigInteger.ZERO;
+//		for(int j=qq.length-1;j>=0;j--){
+//			s2 = s1.multiply(qq[j]);
+//			s2 = s2.add(s0);//s0+(s1*qq[j]);
+//			s0=s1;
+//			s1=s2;
+//		}
+//		if((quo.size()-1)%2==0){
+//			return p.subtract(s2);
+//		}
+//		return s2;
 	}
 	
 	public List<BigInteger> quo = new ArrayList<BigInteger>();

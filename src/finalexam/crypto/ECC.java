@@ -7,9 +7,9 @@ public class ECC {
 	Init init = new Init();
 	public static void main(String[] args) {
 		ECC ecc = new ECC();
-		//ecc.twoP(new Point(BigInteger.valueOf(4),BigInteger.valueOf(9)), BigInteger.valueOf(23), BigInteger.valueOf(2));
-		//ecc.addPoints(new Point(BigInteger.valueOf(8),BigInteger.valueOf(13)),new Point(BigInteger.valueOf(8),BigInteger.valueOf(10)), BigInteger.valueOf(23), BigInteger.valueOf(2));
-		ecc.findOrder(new Point(BigInteger.valueOf(8),BigInteger.valueOf(13)), BigInteger.valueOf(23), BigInteger.valueOf(2));
+		//ecc.twoP(new Point(BigInteger.valueOf(22),BigInteger.valueOf(12)), BigInteger.valueOf(23), BigInteger.valueOf(2));
+		//ecc.addPoints(new Point(BigInteger.valueOf(0),BigInteger.valueOf(3)),new Point(BigInteger.valueOf(13),BigInteger.valueOf(1)), BigInteger.valueOf(23), BigInteger.valueOf(2));
+		ecc.findOrder(new Point(BigInteger.valueOf(2288),BigInteger.valueOf(1585)), BigInteger.valueOf(3571), BigInteger.valueOf(7));
 	}
 	public int findXP(int X,Point P,BigInteger p){
 		
@@ -19,20 +19,26 @@ public class ECC {
 	}
 	
 	public int findOrder(Point P,BigInteger p,BigInteger a){
-		int order = 1;
+		int order = 2;
 		Point Ptemp = P;
 		P = twoP(P, p, a);
-		while(Ptemp.x!=P.x){
-			order++;
+		while(Ptemp.x.compareTo(P.x)!=0){
 			P=addPoints(Ptemp, P, p, a);
+			order++;
+			System.out.println("Order -> "+order);
 		}
+		order++;
 		System.out.println(order);
 		return order;
 	}
 	
 	public Point addPoints(Point P,Point Q,BigInteger p,BigInteger a){
 		init.quo.clear();
-		BigInteger den = init.findModuloInverse(Q.x.subtract(P.x), p);
+		BigInteger s = Q.x.subtract(P.x);
+		if(s.compareTo(BigInteger.valueOf(0))==-1){
+			s = s.add(p);
+		}
+		BigInteger den = init.findModuloInverse(s, p);
 		BigInteger num = Q.y.subtract(P.y);
 		BigInteger alpha = init.findSquareMultiply(num.multiply(den),BigInteger.valueOf(1), p);
 		Point p2 = new Point();
