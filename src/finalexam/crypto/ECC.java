@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Random;
 
 import midterm.exam.Init;
 
@@ -14,15 +15,21 @@ public class ECC {
 		ECC ecc = new ECC();
 		//ecc.twoP(new Point(BigInteger.valueOf(22),BigInteger.valueOf(12)), BigInteger.valueOf(23), BigInteger.valueOf(2));
 		//ecc.addPoints(new Point(BigInteger.valueOf(0),BigInteger.valueOf(3)),new Point(BigInteger.valueOf(13),BigInteger.valueOf(1)), BigInteger.valueOf(23), BigInteger.valueOf(2));
-		ecc.findOrder(new Point(BigInteger.valueOf(9),BigInteger.valueOf(2377)), BigInteger.valueOf(3571), BigInteger.valueOf(7));
+		//ecc.findOrder(new Point(BigInteger.valueOf(9),BigInteger.valueOf(2377)), BigInteger.valueOf(7919), BigInteger.valueOf(7));
 		//ecc.findXP(3646, new Point(BigInteger.valueOf(2639),BigInteger.valueOf(2029)), BigInteger.valueOf(3571), BigInteger.valueOf(7));
-		//ecc.generatePoint(new Point(BigInteger.valueOf(0),BigInteger.valueOf(20)), BigInteger.valueOf(23), BigInteger.valueOf(2));
+		//ecc.generatePoint(new Point(BigInteger.valueOf(6925),BigInteger.valueOf(575)), BigInteger.valueOf(7919), BigInteger.valueOf(2));
 		//System.out.println(ecc.powBigInteger(BigInteger.valueOf(6), BigInteger.valueOf(2)));
-		//ecc.findRoot(BigInteger.valueOf(13), BigInteger.valueOf(7), BigInteger.valueOf(15), BigInteger.valueOf(3571));
-		//ecc.GenerateAllPoints(BigInteger.valueOf(2), BigInteger.valueOf(9), BigInteger.valueOf(23));
+		//ecc.findRoot(BigInteger.valueOf(6952), BigInteger.valueOf(2), BigInteger.valueOf(9), BigInteger.valueOf(7919));
+		ecc.GenerateAllPoints(BigInteger.valueOf(7), BigInteger.valueOf(15), BigInteger.valueOf(7919));
+		System.out.println("Highest order is "+ecc.highOrder);
+		ArrayList<Point> al = ecc.orderPoint.get(ecc.highOrder);
+		for(Point P: al){
+			P.printPoint();
+		}
 	}
-	
+	HashMap<Integer,ArrayList<Point>> orderPoint = new HashMap<Integer,ArrayList<Point>>();
 	public ArrayList<Point> GenerateAllPoints(BigInteger a,BigInteger b,BigInteger p){
+		int count=0;
 		Point tmp = null;
 		ArrayList<Point> al = new ArrayList<Point>();
 		for(BigInteger i = BigInteger.ZERO;p.compareTo(i)>0;i=i.add(BigInteger.ONE)){
@@ -33,26 +40,32 @@ public class ECC {
 					
 					Point p1=new Point(i,P.x);
 					al.addAll(generatePoint(p1, p, a));
-					System.out.println("*****************New Point***************");
-					for(Point d: al){
-						d.printPoint();
-						
-					}
+					addOrderPointToMap(al.size()+1, p1);
+//					System.out.println("*****************New Point***************");
+//					for(Point d: al){
+//						d.printPoint();
+//						
+//					}
 					al.clear();
 					Point p2=new Point(i,P.y);
 					al.addAll(generatePoint(p2, p, a));
-					System.out.println("*****************New Point***************");
-					for(Point d: al){
-						d.printPoint();
-						
-					}
+					addOrderPointToMap(al.size()+1, p2);
+//					System.out.println("*****************New Point***************");
+//					for(Point d: al){
+//						d.printPoint();
+//						
+//					}
 					al.clear();
+					//count = al.size();
 				}
 			}
-			
+//			if(count>1000){
+//				break;
+//			}
 			
 		}
-		
+		//System.out.println("Get a random Generator Point");
+		//al.get((int) randomNumberGenerator(al.size())).printPoint();
 		return al;
 		
 	}
@@ -71,7 +84,8 @@ public class ECC {
 //			q.printPoint();
 //		}
 		//Ptemp.printPoint();
-		System.out.println("order is "+(arrP.size()+1));
+		//System.out.println("order is "+(arrP.size()+1));
+		highestOrder(arrP.size()+1);
 		return arrP;
 	}
 	
@@ -89,6 +103,25 @@ public class ECC {
 		return null;
 		
 		
+	}
+	
+	public void addOrderPointToMap(Integer i,Point p){
+		ArrayList<Point> al = orderPoint.get(i);
+		if(orderPoint.isEmpty()||al==null){
+			al = new ArrayList<Point>();
+			al.add(p);
+			orderPoint.put(i, al);
+		}else{
+			al.add(p);
+			orderPoint.put(i, al);
+		}
+	}
+	
+	int highOrder = 0;
+	public void highestOrder(int order){
+		if(order>highOrder){
+			highOrder = order;
+		}
 	}
 	
 	
@@ -117,7 +150,6 @@ public class ECC {
 		while(Ptemp.x.compareTo(P.x)!=0){
 			P=addPoints(Ptemp, P, p, a);
 			order++;
-			System.out.println("Order -> "+order);
 		}
 		order++;
 		//System.out.println(order);
@@ -151,6 +183,13 @@ public class ECC {
 //		System.out.println("2P");
 //		p2.printPoint();
 		return p2;
+	}
+	
+
+	public long randomNumberGenerator(int p2){
+		Random rand = new Random();
+		int randomNum = rand.nextInt(((p2-1) - 2) + 1) + 2;//Max -> p-1 Min -> 2
+		return randomNum;
 	}
 	
 	//To find BigInteger power BigInteger

@@ -20,7 +20,7 @@ public class ECCDH extends ECC{
 //		G.printPoint();
 //		String s = sc1.nextLine();
 //		ECCryptoSystem ec = new ECCryptoSystem(a, b, p, G, s,null,null);
-		new ECCDH(BigInteger.valueOf(7), BigInteger.valueOf(15), BigInteger.valueOf(3571), new Point(BigInteger.valueOf(9),BigInteger.valueOf(2377)), "trump won the election",405,405);
+		new ECCDH(BigInteger.valueOf(2), BigInteger.valueOf(9), BigInteger.valueOf(7919), new Point(BigInteger.valueOf(6925),BigInteger.valueOf(575)), "trump won the election",null,null);
 	}
 	
 	public ECCDH(BigInteger a,BigInteger b,BigInteger p,Point G,String s,Integer nA,Integer nB){
@@ -32,8 +32,7 @@ public class ECCDH extends ECC{
 		Integer orderOfPoint = findOrder(G, p, a);
 		//Check if the private keys multiplied with generator Point will point to infinity
 		if(nA%orderOfPoint==0||nB%orderOfPoint==0){
-			
-			throw new IllegalArgumentException("Error Bad Private Key");
+			throw new IllegalArgumentException("****Error Bad Private Key****");
 		}
 		
 		System.out.println("Private Key of Alice nA : "+nA+"\nPrivate Key of Bob nB : "+nB);
@@ -84,13 +83,6 @@ public class ECCDH extends ECC{
 		String fin = txt.createText(out);
 		System.out.println(fin);
 		
-	}
-	
-	
-	public static long randomNumberGenerator(int p2){
-		Random rand = new Random();
-		int randomNum = rand.nextInt(((p2-1) - 2) + 1) + 2;//Max -> p-1 Min -> 2
-		return randomNum;
 	}
 
 }
