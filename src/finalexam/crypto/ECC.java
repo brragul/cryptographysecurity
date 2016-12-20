@@ -2,6 +2,10 @@ package finalexam.crypto;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import midterm.exam.Init;
 
 public class ECC {
@@ -12,30 +16,43 @@ public class ECC {
 		//ecc.addPoints(new Point(BigInteger.valueOf(0),BigInteger.valueOf(3)),new Point(BigInteger.valueOf(13),BigInteger.valueOf(1)), BigInteger.valueOf(23), BigInteger.valueOf(2));
 		//ecc.findOrder(new Point(BigInteger.valueOf(9),BigInteger.valueOf(2377)), BigInteger.valueOf(3571), BigInteger.valueOf(7));
 		//ecc.findXP(3646, new Point(BigInteger.valueOf(2639),BigInteger.valueOf(2029)), BigInteger.valueOf(3571), BigInteger.valueOf(7));
-		//ecc.generatePoint(new Point(BigInteger.valueOf(2639),BigInteger.valueOf(2029)), BigInteger.valueOf(3571), BigInteger.valueOf(7));
+		//ecc.generatePoint(new Point(BigInteger.valueOf(0),BigInteger.valueOf(20)), BigInteger.valueOf(23), BigInteger.valueOf(2));
 		//System.out.println(ecc.powBigInteger(BigInteger.valueOf(6), BigInteger.valueOf(2)));
 		//ecc.findRoot(BigInteger.valueOf(13), BigInteger.valueOf(7), BigInteger.valueOf(15), BigInteger.valueOf(3571));
-		ecc.generator(BigInteger.valueOf(7), BigInteger.valueOf(15), BigInteger.valueOf(3571));
+		ecc.GenerateAllPoints(BigInteger.valueOf(2), BigInteger.valueOf(9), BigInteger.valueOf(23));
 	}
 	
-	public ArrayList<Point> generator(BigInteger a,BigInteger b,BigInteger p){
+	public ArrayList<Point> GenerateAllPoints(BigInteger a,BigInteger b,BigInteger p){
+		Point tmp = null;
 		ArrayList<Point> al = new ArrayList<Point>();
-		for(BigInteger i = BigInteger.ZERO;p.divide(BigInteger.valueOf(2)).compareTo(i)>0;i=i.add(BigInteger.ONE)){
+		for(BigInteger i = BigInteger.ZERO;p.compareTo(i)>0;i=i.add(BigInteger.ONE)){
 			Point P = findRoot(i, a, b, p);
 			if(P != null){
 				//System.out.println("X : "+i+"\n"+"root1 : "+P.x+"\nroot2 : "+P.y+"\n");
 				if(P.x != BigInteger.ZERO&&P.y != BigInteger.ZERO){
-					al.addAll(generatePoint(new Point(i,P.x), p, a));
-					al.addAll(generatePoint(new Point(i,P.y), p, a));
+					
+					Point p1=new Point(i,P.x);
+					al.addAll(generatePoint(p1, p, a));
+					System.out.println("*****************New Point***************");
+					for(Point d: al){
+						d.printPoint();
+						
+					}
+					al.clear();
+					Point p2=new Point(i,P.y);
+					al.addAll(generatePoint(p2, p, a));
+					System.out.println("*****************New Point***************");
+					for(Point d: al){
+						d.printPoint();
+						
+					}
+					al.clear();
 				}
 			}
 			
 			
 		}
-		for(Point d: al){
-			d.printPoint();
-			
-		}
+		
 		return al;
 		
 	}
@@ -50,9 +67,9 @@ public class ECC {
 			P=addPoints(Ptemp, P, p, a);
 			arrP.add(P);
 		}	
-		for(Point q:arrP){
-			q.printPoint();
-		}
+//		for(Point q:arrP){
+//			q.printPoint();
+//		}
 		//Ptemp.printPoint();
 		System.out.println("order is "+(arrP.size()+1));
 		return arrP;
@@ -66,7 +83,7 @@ public class ECC {
 		P.y = p.subtract(P.x);
 		if(init.findSquareMultiply(P.x.pow(2), BigInteger.ONE, p).compareTo(y)==0&&init.findSquareMultiply(P.y.pow(2), BigInteger.ONE, p).compareTo(y)==0){
 			//P.x and P.y are root1 and root2 respectively
-			P.printPoint();
+			//P.printPoint();
 			return P;
 		}
 		return null;

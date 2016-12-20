@@ -31,6 +31,7 @@ public class TextConv {
 		for(int i=0;i<totalBlocks;i++){
 			out[i]= compressData(textToNum(s.substring(i*blockLength,(i+1)*blockLength)));
 			out[i] = (out[i].length()%2==0)?out[i]:"0"+out[i];
+			
 		}
 		return out;
 		

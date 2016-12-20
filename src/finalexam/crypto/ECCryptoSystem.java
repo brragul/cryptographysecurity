@@ -20,7 +20,7 @@ public class ECCryptoSystem extends ECC{
 //		G.printPoint();
 //		String s = sc1.nextLine();
 //		ECCryptoSystem ec = new ECCryptoSystem(a, b, p, G, s);
-		new ECCryptoSystem(BigInteger.valueOf(7), BigInteger.valueOf(15), BigInteger.valueOf(3571), new Point(BigInteger.valueOf(9),BigInteger.valueOf(2377)), "cryptograppy");
+		new ECCryptoSystem(BigInteger.valueOf(7), BigInteger.valueOf(15), BigInteger.valueOf(3571), new Point(BigInteger.valueOf(9),BigInteger.valueOf(2377)), "trump won the election");
 	}
 	
 	public ECCryptoSystem(BigInteger a,BigInteger b,BigInteger p,Point G,String s){
