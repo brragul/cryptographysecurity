@@ -15,12 +15,12 @@ public class ECC {
 		//ecc.generatePoint(new Point(BigInteger.valueOf(2639),BigInteger.valueOf(2029)), BigInteger.valueOf(3571), BigInteger.valueOf(7));
 		//System.out.println(ecc.powBigInteger(BigInteger.valueOf(6), BigInteger.valueOf(2)));
 		//ecc.findRoot(BigInteger.valueOf(13), BigInteger.valueOf(7), BigInteger.valueOf(15), BigInteger.valueOf(3571));
-		//ecc.generator(BigInteger.valueOf(7), BigInteger.valueOf(15), BigInteger.valueOf(3571));
+		ecc.generator(BigInteger.valueOf(7), BigInteger.valueOf(15), BigInteger.valueOf(3571));
 	}
 	
 	public ArrayList<Point> generator(BigInteger a,BigInteger b,BigInteger p){
 		ArrayList<Point> al = new ArrayList<Point>();
-		for(BigInteger i = BigInteger.ZERO;p.compareTo(i)>0;i=i.add(BigInteger.ONE)){
+		for(BigInteger i = BigInteger.ZERO;p.divide(BigInteger.valueOf(2)).compareTo(i)>0;i=i.add(BigInteger.ONE)){
 			Point P = findRoot(i, a, b, p);
 			if(P != null){
 				//System.out.println("X : "+i+"\n"+"root1 : "+P.x+"\nroot2 : "+P.y+"\n");
