@@ -88,8 +88,8 @@ public class ECC {
 			}
 			k++;
 		}
-		System.out.println("12P");
-		P.printPoint();
+//		System.out.println("12P");
+//		P.printPoint();
 		return P;
 	}
 	
