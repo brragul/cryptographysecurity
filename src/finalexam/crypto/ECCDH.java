@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import midterm.*;
 import midterm.exam.TextConv;
-public class ECCryptoSystem extends ECC{
+public class ECCDH extends ECC{
 	public static TextConv txt = new TextConv();
 	public static void main(String[] args) {
 //		Scanner sc = new Scanner(System.in);
@@ -19,13 +19,23 @@ public class ECCryptoSystem extends ECC{
 //		Point G = new Point(BigInteger.valueOf(2710),BigInteger.valueOf(930));
 //		G.printPoint();
 //		String s = sc1.nextLine();
-//		ECCryptoSystem ec = new ECCryptoSystem(a, b, p, G, s);
-		new ECCryptoSystem(BigInteger.valueOf(7), BigInteger.valueOf(15), BigInteger.valueOf(3571), new Point(BigInteger.valueOf(9),BigInteger.valueOf(2377)), "trump won the election");
+//		ECCryptoSystem ec = new ECCryptoSystem(a, b, p, G, s,null,null);
+		new ECCDH(BigInteger.valueOf(7), BigInteger.valueOf(15), BigInteger.valueOf(3571), new Point(BigInteger.valueOf(9),BigInteger.valueOf(2377)), "trump won the election",405,405);
 	}
 	
-	public ECCryptoSystem(BigInteger a,BigInteger b,BigInteger p,Point G,String s){
-		int nA = (int) randomNumberGenerator(p.intValue());
-		int nB = (int) randomNumberGenerator(p.intValue());
+	public ECCDH(BigInteger a,BigInteger b,BigInteger p,Point G,String s,Integer nA,Integer nB){
+		if(nA == null||nB==null)
+		{
+		 nA = (int) randomNumberGenerator(p.intValue());
+		 nB = (int) randomNumberGenerator(p.intValue());
+		}
+		Integer orderOfPoint = findOrder(G, p, a);
+		//Check if the private keys multiplied with generator Point will point to infinity
+		if(nA%orderOfPoint==0||nB%orderOfPoint==0){
+			
+			throw new IllegalArgumentException("Error Bad Private Key");
+		}
+		
 		System.out.println("Private Key of Alice nA : "+nA+"\nPrivate Key of Bob nB : "+nB);
 		Point PA = findXP(nA, G, p, a);
 		Point PB = findXP(nB, G, p, a);
@@ -47,7 +57,7 @@ public class ECCryptoSystem extends ECC{
 		System.out.println("Y0 =("+y0.x+","+y0.y+").");
 		System.out.println("Alice computes Mask/Veil (c(1),c(2))=nA*PB");
 		Point C = findXP(nA, PB, p, a);
-		System.out.println("[c(1),c(2)] = ("+C.x+","+C.y+").");
+		System.out.println("Shared Secret Key : [c(1),c(2)] = ("+C.x+","+C.y+").");
 		String[] y1= new String[m.length],y2 = new String[m.length];
 		//String[] y1= new String[]{"9"},y2 = new String[]{"1"};
 		System.out.println("Alice computes y1=c1*m1 mod p and y2=c2*m2 mod p");

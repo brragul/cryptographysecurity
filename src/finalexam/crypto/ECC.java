@@ -14,12 +14,12 @@ public class ECC {
 		ECC ecc = new ECC();
 		//ecc.twoP(new Point(BigInteger.valueOf(22),BigInteger.valueOf(12)), BigInteger.valueOf(23), BigInteger.valueOf(2));
 		//ecc.addPoints(new Point(BigInteger.valueOf(0),BigInteger.valueOf(3)),new Point(BigInteger.valueOf(13),BigInteger.valueOf(1)), BigInteger.valueOf(23), BigInteger.valueOf(2));
-		//ecc.findOrder(new Point(BigInteger.valueOf(9),BigInteger.valueOf(2377)), BigInteger.valueOf(3571), BigInteger.valueOf(7));
+		ecc.findOrder(new Point(BigInteger.valueOf(9),BigInteger.valueOf(2377)), BigInteger.valueOf(3571), BigInteger.valueOf(7));
 		//ecc.findXP(3646, new Point(BigInteger.valueOf(2639),BigInteger.valueOf(2029)), BigInteger.valueOf(3571), BigInteger.valueOf(7));
 		//ecc.generatePoint(new Point(BigInteger.valueOf(0),BigInteger.valueOf(20)), BigInteger.valueOf(23), BigInteger.valueOf(2));
 		//System.out.println(ecc.powBigInteger(BigInteger.valueOf(6), BigInteger.valueOf(2)));
 		//ecc.findRoot(BigInteger.valueOf(13), BigInteger.valueOf(7), BigInteger.valueOf(15), BigInteger.valueOf(3571));
-		ecc.GenerateAllPoints(BigInteger.valueOf(2), BigInteger.valueOf(9), BigInteger.valueOf(23));
+		//ecc.GenerateAllPoints(BigInteger.valueOf(2), BigInteger.valueOf(9), BigInteger.valueOf(23));
 	}
 	
 	public ArrayList<Point> GenerateAllPoints(BigInteger a,BigInteger b,BigInteger p){
@@ -120,7 +120,7 @@ public class ECC {
 			System.out.println("Order -> "+order);
 		}
 		order++;
-		System.out.println(order);
+		//System.out.println(order);
 		return order;
 	}
 	
