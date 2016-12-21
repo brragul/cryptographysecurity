@@ -1,13 +1,14 @@
 package finalexam.crypto;
 
-import java.util.Stack;
-
 public class SecretSharing {
 	public static void main(String[] args){
-		String eqn = "1x2+-2x1+-5x0";
-		Integer[] x =findXK(7);
+		String eqn = "3x2+8x1+5x0";
+		Integer[] x =findXK(15);
 		Integer[] y =findYK(x,eqn);
-		System.out.println();
+		System.out.println("k\tX(k)\tY(k)");
+		for(int i=0;i<x.length;i++){
+			System.out.println(i+"\t"+x[i]+"\t"+y[i]);
+		}
 	}
 	
 	public static Integer[] findYK(Integer[] x,String eqn){

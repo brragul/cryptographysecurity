@@ -12,8 +12,8 @@ public class Init {
 		//System.out.println(obj.findPrimeFactors(306));
 //		System.out.println(obj.isPrime(105018));
 		//System.out.println(obj.findGCD(25678, 2004));
-		//System.out.println(obj.findModuloInverse(BigInteger.valueOf(24),BigInteger.valueOf(23)));
-		System.out.println(obj.findSquareMultiply(k, BigInteger.valueOf(3), BigInteger.valueOf(23)));
+		System.out.println(obj.findModuloInverse(BigInteger.valueOf(36).pow(2),BigInteger.valueOf(77)));
+		//System.out.println(obj.findSquareMultiply(k, BigInteger.valueOf(3), BigInteger.valueOf(23)));
 		//System.out.println(Integer.valueOf(-147)%Integer.valueOf(23));
 		//System.out.println(5%25);
 	}

@@ -3,8 +3,6 @@ package finalexam.crypto;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Random;
 
 import midterm.exam.Init;
@@ -28,9 +26,9 @@ public class ECC {
 		}
 	}
 	HashMap<Integer,ArrayList<Point>> orderPoint = new HashMap<Integer,ArrayList<Point>>();
+	//Generate all possible points on the curve
 	public ArrayList<Point> GenerateAllPoints(BigInteger a,BigInteger b,BigInteger p){
 		int count=0;
-		Point tmp = null;
 		ArrayList<Point> al = new ArrayList<Point>();
 		for(BigInteger i = BigInteger.ZERO;p.compareTo(i)>0;i=i.add(BigInteger.ONE)){
 			Point P = findRoot(i, a, b, p);
@@ -64,12 +62,12 @@ public class ECC {
 //			}
 			
 		}
-		//System.out.println("Get a random Generator Point");
+		//To get a random point
 		//al.get((int) randomNumberGenerator(al.size())).printPoint();
 		return al;
 		
 	}
-	
+	//Generate P,2P,3P...till it reaches infinity point
 	public ArrayList<Point> generatePoint(Point P,BigInteger p,BigInteger a){
 		ArrayList<Point> arrP = new ArrayList<Point>();
 		Point Ptemp = P;
@@ -80,15 +78,10 @@ public class ECC {
 			P=addPoints(Ptemp, P, p, a);
 			arrP.add(P);
 		}	
-//		for(Point q:arrP){
-//			q.printPoint();
-//		}
-		//Ptemp.printPoint();
-		//System.out.println("order is "+(arrP.size()+1));
 		highestOrder(arrP.size()+1);
 		return arrP;
 	}
-	
+	//Find roots for square root of modular arthimetic
 	public Point findRoot(BigInteger x,BigInteger a,BigInteger b,BigInteger p){
 		BigInteger u = (x.pow(3).add(a.multiply(x))).add(b);
 		BigInteger y =init.findSquareMultiply(u, BigInteger.valueOf(1), p);
@@ -97,7 +90,6 @@ public class ECC {
 		P.y = p.subtract(P.x);
 		if(init.findSquareMultiply(P.x.pow(2), BigInteger.ONE, p).compareTo(y)==0&&init.findSquareMultiply(P.y.pow(2), BigInteger.ONE, p).compareTo(y)==0){
 			//P.x and P.y are root1 and root2 respectively
-			//P.printPoint();
 			return P;
 		}
 		return null;
@@ -138,11 +130,10 @@ public class ECC {
 			}
 			k++;
 		}
-//		System.out.println("12P");
-//		P.printPoint();
 		return P;
 	}
 	
+	//Find Order of single point
 	public int findOrder(Point P,BigInteger p,BigInteger a){
 		int order = 2;
 		Point Ptemp = P;
@@ -152,10 +143,10 @@ public class ECC {
 			order++;
 		}
 		order++;
-		//System.out.println(order);
 		return order;
 	}
 	
+	//P+Q
 	public Point addPoints(Point P,Point Q,BigInteger p,BigInteger a){
 		init.quo.clear();
 		BigInteger s = Q.x.subtract(P.x);
@@ -168,10 +159,10 @@ public class ECC {
 		Point p2 = new Point();
 		p2.x = (((alpha.pow(2)).subtract(P.x)).subtract(Q.x)).mod(p);
 		p2.y = ((alpha.multiply(P.x.subtract(p2.x))).subtract(P.y)).mod(p);
-//		System.out.println("P+Q");
-//		p2.printPoint();
 		return p2;
 	}
+	
+	//2P
 	public Point twoP(Point P,BigInteger p,BigInteger a){
 		init.quo.clear();
 		BigInteger denominator = init.findModuloInverse(P.y.multiply(BigInteger.valueOf(2)), p);
@@ -180,8 +171,6 @@ public class ECC {
 		Point p2 = new Point();
 		p2.x = ((alpha.pow(2)).subtract(P.x.multiply(BigInteger.valueOf(2)))).mod(p);
 		p2.y = ((alpha.multiply(P.x.subtract(p2.x))).subtract(P.y)).mod(p);
-//		System.out.println("2P");
-//		p2.printPoint();
 		return p2;
 	}
 	
