@@ -20,7 +20,7 @@ public class ECC {
 		//ecc.generatePoint(new Point(BigInteger.valueOf(6925),BigInteger.valueOf(575)), BigInteger.valueOf(7919), BigInteger.valueOf(2));
 		//System.out.println(ecc.powBigInteger(BigInteger.valueOf(6), BigInteger.valueOf(2)));
 		//ecc.findRoot(BigInteger.valueOf(6952), BigInteger.valueOf(2), BigInteger.valueOf(9), BigInteger.valueOf(7919));
-		ecc.GenerateAllPoints(BigInteger.valueOf(7), BigInteger.valueOf(15), BigInteger.valueOf(7919));
+		ecc.GenerateAllPoints(BigInteger.valueOf(3876), BigInteger.valueOf(4488), BigInteger.valueOf(7919));
 		System.out.println("Highest order is "+ecc.highOrder);
 		ArrayList<Point> al = ecc.orderPoint.get(ecc.highOrder);
 		for(Point P: al){
